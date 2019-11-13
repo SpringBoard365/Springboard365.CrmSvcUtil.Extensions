@@ -1,4 +1,4 @@
-SET packageVersion=1.0.0-alpha001
+SET packageVersion=1.0.0-alpha003
 
 NuGet.exe pack ../Springboard365.CrmSvcUtil.SingleEntity.csproj -Build -symbols -Version %packageVersion%
 

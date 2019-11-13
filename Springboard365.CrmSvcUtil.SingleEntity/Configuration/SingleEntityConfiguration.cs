@@ -57,5 +57,10 @@
 
             return GetEntityName();
         }
+
+        public string GetNamespace()
+        {
+            return parameters["namespace"].ToString();
+        }
     }
 }

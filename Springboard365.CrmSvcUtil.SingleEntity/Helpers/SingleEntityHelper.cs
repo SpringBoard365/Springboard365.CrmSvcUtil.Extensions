@@ -1,6 +1,5 @@
 ﻿namespace Springboard365.CrmSvcUtil.Extensions
 {
-    using System;
     using System.IO;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -19,7 +18,7 @@
             new RegexConfig("string", "// </auto-generated>", string.Empty),
             new RegexConfig("string", "public partial class", "public class"),
             new RegexConfig("string", "this.", string.Empty),
-            new RegexConfig("string", "Microsoft.Xrm.Sdk.Client.", string.Empty), 
+            new RegexConfig("string", "Microsoft.Xrm.Sdk.Client.", string.Empty),
             new RegexConfig("string", "Microsoft.Xrm.Sdk.", string.Empty),
             new RegexConfig("string", "System.Runtime.Serialization.", string.Empty),
             new RegexConfig("string", "System.Collections.Generic.", string.Empty),
@@ -30,8 +29,8 @@
             new RegexConfig("string", "System.Enum", "Enum"),
             new RegexConfig("string", "System.CodeDom.Compiler.", string.Empty),
             new RegexConfig("string", "GeneratedCodeAttribute", "GeneratedCode"),
-            new RegexConfig("string", "Springboard365.Xrm.Entities.", string.Empty),
-            new RegexConfig("regex",  Regex.Escape("[GeneratedCode(\"CrmSvcUtil\", \"9.1.0.25\")]"), string.Empty),
+            new RegexConfig("string", SingleEntityConfiguration.Instance.GetNamespace() + ".", string.Empty),
+            new RegexConfig("regex",  @"\[GeneratedCode\(""CrmSvcUtil"", ""(\d+\.)?(\d+\.)?(\d+\.)?(\d+)""\)\]", string.Empty),
             new RegexConfig("string", "DataContractAttribute()", "DataContract"),
             new RegexConfig("string", "AttributeLogicalNameAttribute", "AttributeLogicalName"),
             new RegexConfig("string", "EntityLogicalNameAttribute", "EntityLogicalName"),
@@ -45,21 +44,22 @@
             new RegexConfig("regex",  @"^(\s)+OnPropertyChanging\(""(\w)+""\)\;", string.Empty),
             new RegexConfig("regex",  @"^(\s)+OnPropertyChanged\(""(\w)+""\)\;", string.Empty),
             new RegexConfig("regex",  @"public const int EntityTypeCode = (\d)+;", string.Empty),
-            new RegexConfig("string", "Nullable<Guid>", "Guid?"),
-            new RegexConfig("string", "Nullable<double>", "double?"),
-            new RegexConfig("string", "Nullable<int>", "int?"),
-            new RegexConfig("string", "Nullable<DateTime>", "DateTime?"),
-            new RegexConfig("string", "Nullable<bool>", "bool?"),
-            new RegexConfig("string", "Nullable<long>", "long?"),
-            new RegexConfig("string", "Nullable<decimal>", "decimal?"),
+            new RegexConfig("regex", "Nullable<(.*)>", "$1?"),
+            new RegexConfig("string", SingleEntityConfiguration.Instance.GetEntityName() + "State", SingleEntityConfiguration.Instance.GetEntityAlternateName() + "State" ),
+            new RegexConfig("string", "[assembly: ProxyTypesAssembly]", string.Empty),
+            new RegexConfig("string", "((value == null))", "(value == null)"),
+            new RegexConfig("string", "((optionSet != null))", "(optionSet != null)"),
+            new RegexConfig("string", "(((int)(value))))", "((int)(value)))")
         };
 
         private readonly RegexConfig[] fullDocumentRegexConfigs = new RegexConfig[]
         {
             new RegexConfig("regex", @"^.*\/\/\/ ?<summary>.*\n(?:^.*\/\/\/.*$\n)*", string.Empty),
             new RegexConfig("regex", @"^(\s)+private.*\n(.*\n){6}", string.Empty),
-            //new RegexConfig("regex", Regex.Escape("\r\n(\\s)+\r\n"), string.Empty),
-            //new RegexConfig("regex", Regex.Escape("{\r\n(\\s){0,4}\r\n(\\s){2}"), "{\r\n\t\t"),
+            new RegexConfig("regex", @"\{(\s)+\n(\s)+\n(\s)+\n", "{\n"),
+            new RegexConfig("regex", @"\;(\s)+\n(\s)+\n(\s)+\n", ";\n\n"),
+            new RegexConfig("regex", @"\{(\s)+\n(\s)+\n", "{\n"),
+            new RegexConfig("regex", @"\:(\s+)\n(\s)+base", ": base"),
         };
 
         private SingleEntityHelper()
